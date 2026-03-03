@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bırakırsın.com</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin:0;
+    font-family:Poppins, sans-serif;
+    background: linear-gradient(135deg,#a00000,#ffcc00);
+    color:white;
+    text-align:center;
+}
+
+.container{
+    max-width:1000px;
+    margin:auto;
+    padding:30px;
+}
+
+h1{
+    font-size:64px;
+    margin-bottom:5px;
+}
+
+.subtitle{
+    font-size:20px;
+    opacity:0.9;
+}
+
+.counter{
+    font-size:22px;
+    margin-top:15px;
+}
+
+.card{
+    background:rgba(0,0,0,0.25);
+    backdrop-filter: blur(10px);
+    border-radius:20px;
+    padding:30px;
+    margin-top:25px;
+}
+
+.meme{
+    font-size:24px;
+    margin:15px 0;
+}
+
+button{
+    background:white;
+    color:#a00000;
+    border:none;
+    padding:14px 28px;
+    font-size:18px;
+    border-radius:12px;
+    cursor:pointer;
+    margin-top:15px;
+    transition:0.2s;
+}
+
+button:hover{
+    transform:scale(1.05);
+}
+
+.result{
+    font-size:28px;
+    margin-top:20px;
+    font-weight:700;
+}
+
+.quiz button{
+    display:block;
+    margin:10px auto;
+}
+
+.share{
+    margin-top:20px;
+}
+
+.share a{
+    text-decoration:none;
+    background:white;
+    color:#a00000;
+    padding:10px 20px;
+    border-radius:10px;
+    margin:5px;
+    display:inline-block;
+    font-weight:600;
+}
+
+footer{
+    margin-top:40px;
+    opacity:0.8;
+    font-size:14px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Bırakırsın</h1>
+<div class="subtitle">Fenerbahçe’yi bıraktılar… Galatasaray’a geçmek artık çok kolay 😄</div>
+
+<div class="counter">
+Bugün <span id="sayac"></span> kişi Fenerbahçe’yi bıraktı ve Galatasaray’a geçti 😄
+</div>
+
+<div class="card">
+<h2>Belirtiler</h2>
+
+<div class="meme">📺 Fenerbahçe maçını izlerken sinirleniyorsan</div>
+<div class="meme">🫠 "Bu sene şampiyonuz" cümlesi artık eskimiş geliyorsa</div>
+<div class="meme">🧠 Kalbini Galatasaray’a kaptırmaya hazırsan</div>
+
+<button onclick="iknaEt()">Ben hazır hissediyorum</button>
+<div class="result" id="sonuc"></div>
+</div>
+
+<div class="card quiz">
+<h2>Gerçekten bırakmaya hazır mısın?</h2>
+
+<button onclick="quizCevap()">Son 10 yılı hatırlamak istemiyorum</button>
+<button onclick="quizCevap()">Artık huzur istiyorum</button>
+<button onclick="quizCevap()">Kupalar görmek güzel olurdu</button>
+
+<div class="result" id="quizSonuc"></div>
+</div>
+
+<div class="card">
+<h2>İtiraf Edenler</h2>
+<div id="itiraflar"></div>
+
+<button onclick="itirafEkle()">Ben de bıraktım</button>
+</div>
+
+<div class="share">
+<h2>Arkadaşına gönder</h2>
+
+<a id="whatsapp">WhatsApp</a>
+<a id="twitter">X / Twitter</a>
+
+</div>
+
+<footer>
+bırakırsın.com internetin en bilimsel taraftar dönüşüm platformudur
+</footer>
+
+</div>
+
+<script>
+function iknaEt(){
+const mesajlar=[
+"Fenerbahçe’yi bıraktın, Galatasaray’a hoş geldin!",
+"Kalbin doğru kararı verdi, artık stresin %73 azaldı.",
+"Tebrikler, hayat kaliten arttı, Galatasaray ile yoluna devam!",
+"Transfer tamamlandı, artık doğru tribündesin."
+];
+document.getElementById("sonuc").innerText=
+mesajlar[Math.floor(Math.random()*mesajlar.length)];
+}
+
+function quizCevap(){
+document.getElementById("quizSonuc").innerText=
+"Test sonucu: Zaten karar vermişsin 😄";
+}
+
+let toplamItiraf=0;
+function itirafEkle(){
+toplamItiraf++;
+document.getElementById("itiraflar").innerText=
+toplamItiraf+" kişi Fenerbahçe’yi bıraktı ve Galatasaray’a geçti.";
+}
+
+
+/* ======================
+   PAYLAŞIM LİNKLERİ
+====================== */
+
+const siteURL = "https://www.birakirsin.com/";
+
+const twitterText =
+"Bugün kaç kişi Fenerbahçe’yi bıraktı ve Galatasaray’a geçti bak 😂\n" +
+siteURL;
+
+const whatsappText =
+"Bu siteyi görmen lazım 😂\n" +
+"Kaç kişi Fenerbahçe’yi bıraktı ve Galatasaray’a geçti:\n" +
+siteURL;
+
+document.getElementById("whatsapp").href =
+`https://wa.me/?text=${encodeURIComponent(whatsappText)}`;
+
+document.getElementById("twitter").href =
+`https://twitter.com/intent/tweet?text=${encodeURIComponent(twitterText)}`;
+
+
+/* ======================
+   GERÇEKÇİ CANLI SAYAÇ
+====================== */
+
+const MAX_TARGET = 1000000;
+const today = new Date().toISOString().split("T")[0];
+
+let data = JSON.parse(localStorage.getItem("birakirsin_counter"));
+
+if (!data) {
+    data = {
+        date: today,
+        count: Math.floor(Math.random() * 300) + 200
+    };
+}
+
+if (data.date !== today) {
+    data.date = today;
+
+    const remaining = MAX_TARGET - data.count;
+
+    const dailyIncrease = Math.max(
+        5,
+        Math.floor(remaining * 0.002)
+    );
+
+    data.count += dailyIncrease;
+}
+
+const refreshIncrease = Math.floor(Math.random() * 3) + 1;
+data.count += refreshIncrease;
+
+if (data.count > MAX_TARGET) {
+    data.count = MAX_TARGET - Math.floor(Math.random() * 2000);
+}
+
+localStorage.setItem("birakirsin_counter", JSON.stringify(data));
+
+document.getElementById("sayac").innerText =
+data.count.toLocaleString("tr-TR");
+
+</script>
+
+</body>
+</html>
