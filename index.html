@@ -167,6 +167,12 @@ birakirsin.org internetin en bilimsel taraftar dönüşüm platformudur
 
 <script>
 function iknaEt(){
+
+gtag('event','ikna_butonu',{
+event_category:'interaction',
+event_label:'ben_hazir_hissediyorum'
+});
+
 const mesajlar=[
 "Fenerbahçe’yi bıraktın, Galatasaray’a hoş geldin!",
 "Kalbin doğru kararı verdi, artık stresin %73 azaldı.",
@@ -178,6 +184,12 @@ mesajlar[Math.floor(Math.random()*mesajlar.length)];
 }
 
 function quizCevap(){
+
+gtag('event','quiz_cevap',{
+event_category:'interaction',
+event_label:'quiz_butonu'
+});
+
 document.getElementById("quizSonuc").innerText=
 "Test sonucu: Zaten karar vermişsin 😄";
 }
@@ -210,6 +222,24 @@ document.getElementById("whatsapp").href =
 
 document.getElementById("twitter").href =
 `https://twitter.com/intent/tweet?text=${encodeURIComponent(twitterText)}`;
+
+document.getElementById("whatsapp").addEventListener("click",function(){
+
+gtag('event','share',{
+event_category:'social',
+event_label:'whatsapp'
+});
+
+});
+
+document.getElementById("twitter").addEventListener("click",function(){
+
+gtag('event','share',{
+event_category:'social',
+event_label:'twitter'
+});
+
+});
 
 
 /* ======================
